@@ -6,7 +6,7 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:55:12 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/12 22:03:36 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/13 21:46:12 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,35 @@
 #include <string.h>
 #include <stdio.h>
 
+#define	PAUSE 30
+
+void	sigusr1_handler(int signum, siginfo_t *info, void *context)
+{
+	(void)signum;
+	(void)context;
+	(void)info;
+	// write(1, "SU1\n", 4);
+}
+
 int	main(int argc, char *argv[])
 {
-	pid_t			s_pid;
+	pid_t				s_pid;
 	// pid_t			c_pid;
-	int				send;
-	unsigned int	mask;
-	int				i;
+	struct sigaction	sa1;
+	int					send;
+	unsigned int		mask;
+	int					i;
+	
+	sa1.sa_flags = SA_SIGINFO;			// No special flags 
+	sa1.sa_sigaction = &sigusr1_handler;	// Set the handler function 
+    sigemptyset(&sa1.sa_mask);			// No signals to block during handler
+
+	if (sigaction(SIGUSR1, &sa1, NULL) == -1)
+	{
+		printf("Sigerror\n");
+		exit(1);
+	}
+
 	
 	// c_pid = getpid();
 	// printf("Client PID: %d\n", c_pid);
@@ -36,39 +58,43 @@ int	main(int argc, char *argv[])
 	
 	s_pid = atoi(argv[1]);
 	kill(s_pid, SIGUSR1);
-	usleep(100);
+	usleep(PAUSE);
 	// mask = 0b10000000;
 	
 	mask = UINT_MAX;
 	i = -1;
 	while (++i < 32)
 	{
+		usleep(PAUSE);
 		if (((send & mask) >> 31) == 0)
 			kill(s_pid, SIGUSR1);
 		else
 			kill(s_pid, SIGUSR2);
 		send = send << 1;
-		usleep(100);
+		pause();
 	} 
 	
-	usleep(200);
+	// usleep(PAUSE);
 	mask = UCHAR_MAX;
 	send = strlen(argv[2]);
-	usleep(200);
+	usleep(PAUSE);
 	while (send >= 0)
 	{
 		i = -1;
 		while (++i < 8)
 		{
+			usleep(PAUSE);
 			if (((argv[2][send] & mask) >> 7) == 0)
 				kill(s_pid, SIGUSR1);
 			else
 				kill(s_pid, SIGUSR2);
 			argv[2][send] <<= 1;
-			// printf("i: %d\n", i);
-			usleep(100);
+			// printf("send: %d\n", send);
+			pause();
 		}
-		send--; 
+		send--;
+		// printf("send: %d\n", send);
+		// usleep(PAUSE); 
 	}
 	
 

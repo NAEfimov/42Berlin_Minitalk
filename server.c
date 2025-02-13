@@ -6,11 +6,12 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:59:49 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/12 21:56:08 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/13 21:39:21 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
+// #include <sys/time.h>
 
 t_message	msg;
 
@@ -52,6 +53,7 @@ void	sigusr2_handler(int signum, siginfo_t *info, void *context)
 void	sigusr_react(char bit, pid_t pid)
 {
 	int	i;
+	// struct timeval tv;
 	
 	if (msg.c_pid == 0)
 	{
@@ -64,6 +66,7 @@ void	sigusr_react(char bit, pid_t pid)
 	}
 	else if (pid == msg.c_pid)
 	{
+		// gettimeofday(&tv, NULL); 
 		if (msg.len_to_read > 0)						// Get string length
 		{
 			// printf("Read bit: %d\n", bit);
@@ -80,14 +83,21 @@ void	sigusr_react(char bit, pid_t pid)
 				msg.len = (msg.len + 1) * 8 - 1;					// Multiply len in bytes by 8 and remove 1 
 				
 			}
+			usleep(PAUSE);
+			kill(msg.c_pid, SIGUSR1);
+			// write(1, "SL1\n", 4);
 		}
 		else if (msg.str && (msg.len >= 0))				// Get string
 		{
 			// printf("Get str\n");
 			msg.str[msg.len / 8] <<= 1;
 			msg.str[msg.len / 8] += bit;
-			printf("len: %d\n", msg.len);
+			// printf("time: %ld\n", tv.tv_usec);
+			// printf("len: %d | bit: %d | time: %ld\n", msg.len, bit, tv.tv_usec);
 			msg.len--;
+			usleep(PAUSE);
+			kill(msg.c_pid, SIGUSR1);
+			// write(1, "SU1\n", 4);
 			if (msg.len < 0)							// Print string
 			{
 				// printf("%s\n", msg.str);
@@ -96,9 +106,12 @@ void	sigusr_react(char bit, pid_t pid)
 					write(1, &msg.str[i++], 1);
 				write (1, "\n", 1);
 				msg_clear();
-				write(1,"clear\n", 6);
+				// write(1,"clear\n", 6);
+				// kill(msg.c_pid, SIGUSR1);
 			}
 		}
+		// kill(msg.c_pid, SIGUSR1);
+		// write(1, "SU1\n", 4);
 	}
 	else
 		printf("Server is busy\n");
@@ -117,19 +130,18 @@ int	main(void)
 	pid = getpid();
 	printf("Server PID: %d\n", pid);
 
-    sa1.sa_flags = SA_SIGINFO;			// No special flags 
-	sa1.sa_sigaction = &sigusr1_handler;	// Set the handler function 
-    sigemptyset(&sa1.sa_mask);			// No signals to block during handler
-
+    sa1.sa_flags = SA_SIGINFO;					// No special flags 
+	sa1.sa_sigaction = &sigusr1_handler;		// Set the handler function 
+    sigemptyset(&sa1.sa_mask);					// No signals to block during handler
 	if (sigaction(SIGUSR1, &sa1, NULL) == -1)
 	{
 		printf("Sigerror\n");
 		exit(1);
 	}
 
-    sa2.sa_flags = SA_SIGINFO;			// No special flags 
-	sa2.sa_sigaction = &sigusr2_handler;	// Set the handler function 
-    sigemptyset(&sa2.sa_mask);			// No signals to block during handler
+    sa2.sa_flags = SA_SIGINFO;					// No special flags 
+	sa2.sa_sigaction = &sigusr2_handler;		// Set the handler function 
+    sigemptyset(&sa2.sa_mask);					// No signals to block during handler
 	if (sigaction(SIGUSR2, &sa2, NULL) == -1)
 	{
 		printf("Sigerror\n");
@@ -137,10 +149,7 @@ int	main(void)
 	}
 	
 	while (1)
-	{
 		pause();
-		// printf("%s\n", msg.str);
-	}
 	
 	return (0);
 }
