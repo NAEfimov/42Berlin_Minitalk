@@ -6,7 +6,7 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:55:12 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/14 15:41:48 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:00:21 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	send_int(pid_t s_pid, int len)
 		else
 			kill(s_pid, SIGUSR2);
 		len = len << 1;
-		pause();
+		// pause();
 	}
 }
 
@@ -53,7 +53,7 @@ void	send_char(pid_t s_pid, char c)
 		else
 			kill(s_pid, SIGUSR2);
 		c <<= 1;
-		pause();
+		// pause();
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:44:32 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/14 15:44:01 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:08:23 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <limits.h>
 # include "types.h"
 
-# define PAUSE	30
+# define PAUSE	700
 
 void	sigusr1_handler(int signum);
 void	send_int(pid_t s_pid, int len);

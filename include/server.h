@@ -6,7 +6,7 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:12:17 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/14 15:28:33 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:03:46 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include "types.h"
 
-# define PAUSE			50
+# define PAUSE			500
 # define SIGUSR1_BIT	0
 # define SIGUSR2_BIT	1
 

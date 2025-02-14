@@ -6,7 +6,7 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 13:21:25 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/14 14:51:41 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:04:32 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	msg_getlen(t_message *msg, char bit)
 	msg->len_to_read--;
 	if (msg->str == NULL && msg->len_to_read == 0)
 		msg_malloc(msg);
-	usleep(PAUSE);
+	// usleep(PAUSE);
 	kill(msg->c_pid, SIGUSR1);
 }
 
@@ -53,7 +53,7 @@ void	msg_getstr(t_message *msg, char bit)
 	msg->str[msg->len / 8] <<= 1;
 	msg->str[msg->len / 8] += bit;
 	msg->len--;
-	usleep(PAUSE);
+	// usleep(PAUSE);
 	kill(msg->c_pid, SIGUSR1);
 	if (msg->len < 0)
 	{

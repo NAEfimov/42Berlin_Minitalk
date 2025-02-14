@@ -6,7 +6,7 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 14:59:49 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/14 14:51:32 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:15:09 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ t_message	g_msg;
 
 void	sigusr_react(char bit, pid_t pid)
 {
-	if (g_msg.c_pid == 0)
+	if (g_msg.c_pid != pid)
+	{
+		msg_clear(&g_msg);
 		g_msg.c_pid = pid;
+	}
 	else if (pid == g_msg.c_pid)
 	{
 		if (g_msg.len_to_read > 0)
