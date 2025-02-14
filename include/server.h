@@ -6,7 +6,7 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:12:17 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/14 14:54:43 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/14 15:28:33 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,6 @@
 # define PAUSE			50
 # define SIGUSR1_BIT	0
 # define SIGUSR2_BIT	1
-
-// typedef struct s_message
-// {
-// 	pid_t			c_pid;
-// 	unsigned char	byte;
-// 	int				len;
-// 	char			len_to_read;
-// 	char			*str;
-// }	t_message;
 
 void	msg_init(t_message *msg);
 void	msg_clear(t_message *msg);
