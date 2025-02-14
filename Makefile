@@ -24,6 +24,8 @@ SRC_DIR		:= src
 SRCS		:=		\
 	server.c		\
 	server_msg.c	\
+	server_sigusr.c	\
+	server_utils.c	\
 	client.c		
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 
