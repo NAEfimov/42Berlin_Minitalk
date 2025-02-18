@@ -6,13 +6,12 @@
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 14:21:48 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/14 14:51:46 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:08:21 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 #include "libft.h"
-#include "types.h"
 
 void	msgclear_exit(t_message *msg, char *errmsg)
 {

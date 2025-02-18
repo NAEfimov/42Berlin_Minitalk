@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server_msg.c                                       :+:      :+:    :+:   */
+/*   server_msg_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nefimov <nefimov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 13:21:25 by nefimov           #+#    #+#             */
-/*   Updated: 2025/02/18 00:10:07 by nefimov          ###   ########.fr       */
+/*   Updated: 2025/02/18 00:10:15 by nefimov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	msg_getstr(t_message *msg, char bit)
 	{
 		write(1, msg->str, ft_strlen(msg->str));
 		write (1, "\n", 1);
+		kill(msg->c_pid, SIGUSR2);
 		msg_clear(msg);
 	}
 }
