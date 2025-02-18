@@ -1,4 +1,4 @@
-#NAME		:= server client server_bonus client_bonus
+NAME		:= server client server_bonus client_bonus
 NAME_S		:= server
 NAME_SB		:= server_bonus
 NAME_C		:= client
